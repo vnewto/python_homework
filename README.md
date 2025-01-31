@@ -18,7 +18,7 @@ python -m venv .venv
 source .venv/bin/activate
 code .
 ```
-For some environments, you have to use the `python3` command.  For Windows users, the command is different:
+For some environments, you have to use the `python3` command.  For Windows users (you should use Git Bash in Windows), the command is different:
 ```shell
 python -m venv .venv
 source .venv/Scripts/activate
