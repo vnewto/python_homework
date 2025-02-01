@@ -6,6 +6,7 @@ try: # SQL operations can raise exceptions!
     # is closed at the end, even if an exception occurs
     with sqlite3.connect("./db/lesson.db",isolation_level='IMMEDIATE') as conn:    
         cursor = conn.cursor()
+        conn.execute("PRAGMA foreign_keys = 1")
         # This does a SELECT and a subquery
         stmt = """SELECT o.order_id, l.line_item_id, p.product_name FROM orders  
         o JOIN line_items l on o.order_id = l.order_id JOIN products p on 
