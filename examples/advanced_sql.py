@@ -1,4 +1,5 @@
 import sqlite3
+import traceback
 
 try: # SQL operations can raise exceptions!
     
@@ -78,10 +79,15 @@ try: # SQL operations can raise exceptions!
         for row in result:
             print(row)
 except Exception as e:
-    print(f"An exception occurred: {type(e).__name__}")
-    raise e # we pass the exception on so that we can see the stack.
-    # this is a shortcut -- often one would catch specific exceptions and not pass
-    # them on.
+    trace_back = traceback.extract_tb(e.__traceback__)
+    stack_trace = list()
+    for trace in trace_back:
+        stack_trace.append("File : %s , Line : %d, Func.Name : %s, Message : %s" % (trace[0], trace[1], trace[2], trace[3]))
+    print(f"Exception type: {type(e).__name__}")
+    message = str(e)
+    if message:
+        print(f"Exception message: {message}")
+    print(f"Stack trace: {stack_trace}")
 else:
     print("All SQL operations completed.")
     
