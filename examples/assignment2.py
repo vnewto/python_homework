@@ -1,5 +1,7 @@
 import csv
 import traceback
+import os
+from datetime import datetime
 
 def read_employees():
     employees = {}
@@ -71,3 +73,70 @@ def all_employees_dict():
     return return_dict
 
 print("all_employees_dict: ", all_employees_dict())
+
+def get_this_value():
+    return os.getenv("THISVALUE")
+
+import custom_module
+def set_that_secret(new_secret):
+    custom_module.set_secret(new_secret)
+
+set_that_secret("open, sesame!")
+print("module secret now: ", custom_module.secret)
+
+def read_minutes():
+    dict1 = {}
+    dict2 = {}
+    with open("../csv/minutes1.csv") as file:
+        reader = csv.reader(file)
+        list1 = []
+        first = True
+        for row in reader:
+            if first:
+                dict1["fields"] = row
+                first = False
+            else:
+                list1.append(tuple(row))
+        dict1["rows"] = list1
+    with open("../csv/minutes2.csv") as file:
+        reader = csv.reader(file)
+        list1 = []
+        first = True
+        for row in reader:
+            if first:
+                dict2["fields"] = row
+                first = False
+            else:
+                list1.append(tuple(row))
+        dict2["rows"] = list1
+    return dict1,dict2
+
+minutes1, minutes2 = read_minutes()
+
+print(minutes1, minutes2)
+
+def create_minutes_set():
+    return set(minutes1["rows"]).union(set(minutes2["rows"]))
+
+minutes_set = create_minutes_set()
+print(minutes_set)
+
+def create_minutes_list():
+    minutes_list1 = list(minutes_set)
+    minutes_list1 = list(map(lambda x: (x[0], datetime.strptime(x[1], "%B %d, %Y")), minutes_list1))
+    return minutes_list1
+
+minutes_list = create_minutes_list()
+print(minutes_list)
+
+def write_sorted_list():
+    minutes_list.sort(key= lambda x: x[1])
+    minutes_list1 = list(map(lambda row: (row[0], datetime.strftime(row[1], "%B %-d, %Y")), minutes_list))
+    with open("./minutes.csv","w") as file:
+        writer = csv.writer(file)
+        writer.writerow(minutes1["fields"])
+        for row in minutes_list1:
+            writer.writerow(row)
+    return minutes_list1
+
+write_sorted_list()
