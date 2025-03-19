@@ -162,32 +162,32 @@ print("hangman incorrect guess: ", hangman("phone", "kl"))
 def pig_latin(string):
     #split string into a list
     word_list = string.split()
-    print("word_list: ", word_list)
     #define a list of vowels
-    vowels = ["a", "e", "i", "o", "u"]
+    vowels = ["a", "e", "i", "o", "u", "y"]
     #define a list of consonants
-    consonants = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "x", "y", "z"]
+    consonants = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "x", "z"]
 
     for i in range(len(word_list)):
         #check the first letter of each word
         for k in range(len(consonants)):
             if word_list[i][0] == consonants[k]:
                 word_list[i] = word_list[i][1:] + word_list[i][0]
-                print(word_list)
         
     for i in range(len(word_list)):    
         for j in range(len(vowels)):
             #if string starts with "qu", move the "qu" to the end and add "ay"
             if word_list[i][0] == "q" and word_list[i][1] == "u":
                 word_list[i] = word_list[i][2:] + "quay"
-                print(word_list)
                 break
             #if string starts with a vowel, add "ay" to the end
             elif word_list[i][0] == vowels[j]:
                 word_list[i] = word_list[i] + "ay"
-                print(word_list)
                 break
+    #return the word list converted back to a string
+    return " ".join(word_list)
                 
 
 
 print(pig_latin("python is quite challenging"))
+print(pig_latin("quick try another example"))
+print(pig_latin("three blind mice"))
