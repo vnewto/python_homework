@@ -101,12 +101,9 @@ def student_scores(score_type, **kwargs):
                 sum += value
             return sum / len(kwargs)
         case "best":
-            #make a list of grades
-            grades = []
-            for value in kwargs.values():
-                grades.append(value)
             #get highest grade from the list
-            best_grade = max(grades)
+            best_grade = max(kwargs.values())
+            print("best_grade: ", best_grade)
             #iterate over the kwargs and return the name associated with the high grade
             for key, value in kwargs.items():
                 if value == best_grade:
@@ -120,18 +117,16 @@ def titleize(string):
     little_words = ["a", "on", "an", "the", "of", "and", "is", "in"]
     #split string into list
     string_list = string.split()
-    #iterate through the list and capitalize each word
-    capitalized_strings = []
-    for item in string_list:
-        capitalized_strings.append(item.capitalize())
+    #capitalize the first and last word of string_list
+    string_list[0] = string_list[0].capitalize()
+    string_list[-1] = string_list[-1].capitalize()
     #iterate over list starting at position 1 and ending at the list length
-    for i in range(1, len(capitalized_strings)-1):
-        #loop over the "little" words and if it's NOT a little word, capitalize it
-        for j in range(len(little_words)):
-            if capitalized_strings[i].lower() == little_words[j]:
-                capitalized_strings[i] = capitalized_strings[i].lower()
+    for i in range(1, len(string_list)-1):
+        #if it's NOT a little word, capitalize it
+        if string_list[i] not in little_words:
+            string_list[i] = string_list[i].capitalize()
     #join list back together as a string
-    return " ".join(capitalized_strings)
+    return " ".join(string_list)
 
 print("final title: ", titleize("harry potter and the sorcerer's stone"))
 print("final title: ", titleize("harry potter and the chamber of secrets"))
@@ -163,31 +158,44 @@ def pig_latin(string):
     #split string into a list
     word_list = string.split()
     #define a list of vowels
-    vowels = ["a", "e", "i", "o", "u", "y"]
+    vowels = ["a", "e", "i", "o", "u"]
     #define a list of consonants
-    consonants = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "x", "z"]
-
+    consonants = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "x", "y", "z"]
+    #iterate over the word list
     for i in range(len(word_list)):
-        #check the first letter of each word
-        for k in range(len(consonants)):
-            if word_list[i][0] == consonants[k]:
-                word_list[i] = word_list[i][1:] + word_list[i][0]
-        
-    for i in range(len(word_list)):    
-        for j in range(len(vowels)):
+        #if string starts with a vowel, add "ay" to the end
+        if word_list[i][0].lower() in vowels:
+            word_list[i] = word_list[i] + "ay"
+        else:
             #if string starts with "qu", move the "qu" to the end and add "ay"
-            if word_list[i][0] == "q" and word_list[i][1] == "u":
+            if len(word_list[i]) > 1 and word_list[i][0:2].lower() == "qu":
                 word_list[i] = word_list[i][2:] + "quay"
-                break
-            #if string starts with a vowel, add "ay" to the end
-            elif word_list[i][0] == vowels[j]:
-                word_list[i] = word_list[i] + "ay"
-                break
-    #return the word list converted back to a string
+            else:
+                #find out what index # the first vowel is for each word
+                first_vowel = 0
+                for j in range(len(word_list[i])):
+                    if word_list[i][j].lower() in vowels:
+                        #return the value of j
+                        first_vowel = j
+                        print("word_list[i]: ", word_list[i])
+                        print("first_vowel: ", first_vowel)
+                        break
+                #if vowel position > 0, create a consonant cluster from 0 to j
+                if first_vowel > 0:
+                    consonants = word_list[i][0:int(first_vowel)]
+                    print("consonants: ", consonants)
+                    #if consonant cluster ends with a q and the next letter is u, move consonant cluster + u to the end of the word and add "ay"
+                    if consonants[-1] == "q" and word_list[i][first_vowel] == "u":
+                        word_list[i] = word_list[i][first_vowel + 1:] + consonants + "uay"
+                    else:    
+                        #move consonant cluster to the end of the word and add "ay"
+                        word_list[i] = word_list[i][first_vowel:] + consonants + "ay"
+                        print("new word + ay: ", word_list[i])
     return " ".join(word_list)
                 
 
 
-print(pig_latin("python is quite challenging"))
-print(pig_latin("quick try another example"))
-print(pig_latin("three blind mice"))
+print("pig_latin: ", pig_latin("coding is quite challenging"))
+print("pig_latin: ", pig_latin("quick do another example"))
+print("pig_latin: ", pig_latin("three blind mice"))
+print("pig_latin: ", pig_latin("square"))
