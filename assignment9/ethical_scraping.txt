@@ -1,0 +1,13 @@
+1. Which sections of the website are restricted for crawling?
+
+A lot of sections of the website are restricted. The file mentions that low-speed bots can view article pages, but not dynamically-generated pages. They also list many sections of the website including deletion pages, meta user discussion pages, spam/blacklist pages, request pages, changing username pages, administrator pages, copyright pages, protected titles, and wiki/Special pages. Their restricted list inculdes pages with this type of content in all languages. 
+
+
+2. Are there specific rules for certain user agents?
+
+Yes, many user agents have been disallowed for various reasons including sending too many requests, crawling too quickly, copying entire websites, and downloading too many pages for unhelpful reasons. They have disallowed certain advertising and work bots. Certain crawlers such as UbiCrawler, SOC, and Zao are allowed if they're crawling with the specific purpose of feeding search engines. They have requested that the user-agent "wget" uses a wait option to delay between requests when it is crawling.
+
+
+3. Reflect on why websites use robots.txt and write 2-3 sentences explaining its purpose and how it promotes ethical scraping. 
+
+I've only just learned about web scraping this past week, but from what I understand, web scrapers can crash a site by sending it too many requests in a short amount of time. This would cause an overload and prevent the site from working. Additionally, certain bots may be scraping the web for unethical reasons, such as using the information to advertise and make money, copying the website and claiming it as their own, or spamming a website on purpose to crash it. The robots.txt file puts out ethical guidelines to ensure their website is functional and safe for users.
