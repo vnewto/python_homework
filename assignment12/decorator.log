@@ -1,0 +1,9 @@
+Function Name: empty_function
+Positional Parameters: None
+Returned Result: None
+Function Name: returns_true
+Positional Parameters: (4, 5, 6)
+Returned Result: True
+Function Name: input_kwargs
+Positional Parameters: {'Location': 'Paris', 'Language': 'French', 'Continent': 'Europe'}
+Returned Result: <function logger_decorator at 0x000002858290A2A0>
